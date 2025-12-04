@@ -1,7 +1,7 @@
 {
     "name": "docaxess/php-apify-sdk",
     "description": "Unofficial SDK for Apify service",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "type": "library",
     "require": {
         "saloonphp/saloon": "^3.8",
@@ -9,10 +9,10 @@
         "citco/carbon": "^3.0"
     },
     "require-dev": {
-        "pestphp/pest": "^3.6.0",
+        "pestphp/pest": "^4.1.6",
         "phpstan/phpstan": "^2.0.3",
         "laravel/pint": "^1.15",
-        "symfony/var-dumper": "^7.0"
+        "symfony/var-dumper": "^8.0"
     },
     "license": "CC-BY-1.0",
     "autoload": {
