@@ -26,7 +26,7 @@ readonly class Proxy
     {
         return new self(
             password: $state['password'],
-            groups: array_map(fn (array $group) => Group::make($group), $state['groups'])
+            groups: array_map(Group::make(...), $state['groups'])
         );
     }
 
@@ -37,8 +37,8 @@ readonly class Proxy
 
     private function getGroupName(?string $name = null): string
     {
-        $group = array_values(array_filter($this->groups, fn (Group $g) => $g->name === $name));
+        $group = array_values(array_filter($this->groups, fn (Group $g): bool => $g->name === $name));
 
-        return ! empty($group) ? $group[0]->name : 'auto';
+        return $group === [] ? 'auto' : $group[0]->name;
     }
 }

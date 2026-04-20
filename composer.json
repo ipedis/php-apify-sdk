@@ -12,6 +12,7 @@
         "pestphp/pest": "^4.4",
         "phpstan/phpstan": "^2.1",
         "laravel/pint": "^1.29",
+        "rector/rector": "^2.0",
         "symfony/var-dumper": "^8.0"
     },
     "license": "CC-BY-1.0",
@@ -32,10 +33,19 @@
         }
     ],
     "scripts": {
-        "lint": "vendor/bin/pint",
-        "analyze": "vendor/bin/phpstan analyse --memory-limit=2G",
+        "pint": "vendor/bin/pint",
+        "pint:check": "vendor/bin/pint --test",
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=2G",
+        "rector": "vendor/bin/rector process",
+        "rector:check": "vendor/bin/rector process --dry-run",
         "test": "php -d memory_limit=-1 vendor/bin/pest --colors=auto --display-warnings tests",
-        "coverage": "php -d memory_limit=-1 vendor/bin/pest --colors=auto --coverage tests"
+        "test:coverage": "php -d memory_limit=-1 vendor/bin/pest --colors=auto --coverage tests",
+        "qa": [
+            "@pint:check",
+            "@phpstan",
+            "@rector:check",
+            "@test"
+        ]
     },
     "config": {
         "allow-plugins": {

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace DocAxess\Apify\Webhook\Config;
 
 use DocAxess\Apify\Webhook\Event\EventType;
+use JsonSerializable;
 
-readonly class WebhookConfig implements \JsonSerializable
+readonly class WebhookConfig implements JsonSerializable
 {
     /**
      * @param  EventType[]  $eventTypes

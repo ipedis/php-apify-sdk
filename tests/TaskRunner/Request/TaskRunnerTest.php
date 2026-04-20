@@ -6,7 +6,7 @@ use DocAxess\Apify\Core\Type\Status;
 use DocAxess\Apify\Task\Data\Run\Identifier;
 use DocAxess\Apify\Task\Data\Run\RunResult;
 
-it('should run a new task', function () {
+it('should run a new task', function (): void {
     $taskRunner = $this->apify->taskRunner()->run('foo');
     $identifier = $taskRunner->identifier;
     expect($taskRunner)->toBeInstanceOf(RunResult::class)

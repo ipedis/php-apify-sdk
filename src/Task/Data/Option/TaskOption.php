@@ -90,7 +90,7 @@ readonly class TaskOption implements Stringable
                 fn (mixed $value, string $key): bool => $value !== null && $value !== self::DEFAULT_STATE[$key],
                 ARRAY_FILTER_USE_BOTH
             ),
-            ...(empty($this->webhooks) ? [] : ['webhooks' => $this->encodeWebhook()]),
+            ...($this->webhooks === [] ? [] : ['webhooks' => $this->encodeWebhook()]),
         ];
     }
 

@@ -24,14 +24,14 @@ dataset('proxy', [
     ],
 ]);
 
-it('should make object from array', function (array $state) {
+it('should make object from array', function (array $state): void {
     $proxy = Proxy::make($state);
     expect($proxy->password)->toBe('password')
         ->and($proxy->groups)->toBeArray()
         ->and($proxy->groups)->toHaveCount(2);
 })->with('proxy');
 
-it('should generate proxy url', function (array $state, ?string $group, string $username) {
+it('should generate proxy url', function (array $state, ?string $group, string $username): void {
     $proxy = Proxy::make($state);
     expect($proxy->url($group))->toBe(sprintf('http://%s:password@proxy.apify.com:8000', $username));
 })

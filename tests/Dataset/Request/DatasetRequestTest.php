@@ -5,7 +5,7 @@ declare(strict_types=1);
 use DocAxess\Apify\Core\Type\Identifier;
 use DocAxess\Apify\Dataset\Item\Item;
 
-it('should return result for case', function (Identifier $identifier, array $expected) {
+it('should return result for case', function (Identifier $identifier, array $expected): void {
     $response = $this->apify->dataset()->getJson($identifier);
     expect($response)->toBe($expected);
 })->with([
@@ -17,7 +17,7 @@ it('should return result for case', function (Identifier $identifier, array $exp
     ]],
 ]);
 
-it('should transform response to DTO', function () {
+it('should transform response to DTO', function (): void {
     $objet = new class([]) implements Item
     {
         public function __construct(public array $state) {}

@@ -6,7 +6,7 @@ use DocAxess\Apify\User\Data\Proxy\Group;
 use DocAxess\Apify\User\Data\Proxy\Proxy;
 use DocAxess\Apify\User\Data\User;
 
-it('should return the current user', function () {
+it('should return the current user', function (): void {
     $user = $this->apify->user()->me();
 
     expect($user)->toBeInstanceOf(User::class)

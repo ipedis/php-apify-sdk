@@ -15,9 +15,9 @@ use Throwable;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    private const FIXTURES_PATH = __DIR__.'/fixtures';
+    private const string FIXTURES_PATH = __DIR__.'/fixtures';
 
-    private const EXPECTED_BASE_URL = 'https://api.apify.com';
+    private const string EXPECTED_BASE_URL = 'https://api.apify.com';
 
     protected ApifyConnector $apify;
 
@@ -44,7 +44,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                     path: parse_url($request->getUrl(), PHP_URL_PATH),
                     data: [
                         ...($request->body()?->all() ?? []),
-                        ...($request->query()?->all() ?? []),
+                        ...($request->query()->all() ?? []),
                     ]
                 );
 
@@ -64,7 +64,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
             $path = substr($path, 1);
         }
         // add get parameters to the path
-        $path .= ! empty($data) ? '?'.http_build_query($data) : '';
+        $path .= $data === [] ? '' : '?'.http_build_query($data);
 
         $filePath = self::FIXTURES_PATH."/$path.json";
 

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use DocAxess\Apify\Webhook\Event\EventType;
+use Pest\Expectation;
 
 dataset('eventType', [
     [EventType::BUILD_CREATED, 'ACTOR.BUILD.CREATED'],
@@ -19,9 +20,9 @@ dataset('eventType', [
 ]);
 
 it('create event type from string',
-    fn (EventType $expected, string $value) => expect(EventType::fromString($value))->toBe($expected))
+    fn (EventType $expected, string $value): Expectation => expect(EventType::fromString($value))->toBe($expected))
     ->with('eventType');
 
 it('throw exception when creating event type from invalid string',
-    fn () => EventType::fromString('INVALID_EVENT_TYPE'))
+    fn (): EventType => EventType::fromString('INVALID_EVENT_TYPE'))
     ->throws(InvalidArgumentException::class);

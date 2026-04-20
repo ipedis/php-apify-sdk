@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use DocAxess\Apify\Core\Type\Status;
+use Pest\Expectation;
 
 dataset('status', [
     [Status::READY, 'READY'],
@@ -16,16 +17,16 @@ dataset('status', [
 ]);
 
 it('Should return the correct status from string',
-    fn (Status $expected, string $value) => expect(Status::fromString($value))->toBe($expected))
+    fn (Status $expected, string $value): Expectation => expect(Status::fromString($value))->toBe($expected))
     ->with('status');
 
 it('should compare equal statuses',
-    fn (Status $status1, Status $status2, bool $expected) => expect($status1->is($status2))->toBe($expected))
+    fn (Status $status1, Status $status2, bool $expected): Expectation => expect($status1->is($status2))->toBe($expected))
     ->with([
         [Status::READY, Status::READY, true],
         [Status::READY, Status::RUNNING, false],
     ]);
 
 it('should throw an exception for invalid status',
-    fn () => Status::fromString('INVALID'))
+    fn (): Status => Status::fromString('INVALID'))
     ->throws(InvalidArgumentException::class, 'Invalid status: INVALID');

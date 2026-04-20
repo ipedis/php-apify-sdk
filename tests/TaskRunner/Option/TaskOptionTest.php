@@ -5,8 +5,9 @@ declare(strict_types=1);
 use DocAxess\Apify\Task\Data\Option\TaskOption;
 use DocAxess\Apify\Webhook\Config\WebhookConfig;
 use DocAxess\Apify\Webhook\Event\EventType;
+use Pest\Expectation;
 
-it('should create a task option with default values', function () {
+it('should create a task option with default values', function (): void {
     $option = TaskOption::make();
 
     expect($option->build)->toBe('latest')
@@ -15,7 +16,7 @@ it('should create a task option with default values', function () {
         ->and($option->webhooks)->toBe([]);
 });
 
-it('should create a task option with custom values', function () {
+it('should create a task option with custom values', function (): void {
     $option = TaskOption::make('1.1.1', 6000, 4086);
 
     expect($option->build)->toBe('1.1.1')
@@ -24,17 +25,17 @@ it('should create a task option with custom values', function () {
         ->and($option->webhooks)->toBe([]);
 });
 
-it('should add a webhook to the task option', function () {
+it('should add a webhook to the task option', function (): void {
     $config = WebhookConfig::forEvent(EventType::RUN_CREATED, 'https://example.com');
     $option = TaskOption::make()->addWebhook($config);
     expect($option->webhooks)->toHaveCount(1)
         ->and($option->webhooks)->toContain($config);
 });
 
-it('should throw an exception when adding an invalid webhook', fn () => new TaskOption('latest', 60, 256, [new stdClass])
+it('should throw an exception when adding an invalid webhook', fn (): TaskOption => new TaskOption('latest', 60, 256, [new stdClass])
 )->throws(AssertionError::class);
 
-it('should convert the task option to a query string', fn (TaskOption $option, array $params, string $queryString) => expect($option->toParams())->toBe($params)
+it('should convert the task option to a query string', fn (TaskOption $option, array $params, string $queryString): Expectation => expect($option->toParams())->toBe($params)
     ->and((string) $option)->toBe($queryString)
 )
     ->with([

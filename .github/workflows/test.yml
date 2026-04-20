@@ -27,6 +27,7 @@ jobs:
       - name: Lint, test and build
         run: |
           composer install
-          composer lint
-          composer analyze
-          composer coverage
+          composer pint:check
+          composer phpstan
+          composer rector:check
+          composer test:coverage

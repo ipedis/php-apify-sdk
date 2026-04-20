@@ -7,8 +7,9 @@ namespace DocAxess\Apify\Dataset\Option;
 use DocAxess\Apify\Core\Type\Identifier;
 use DocAxess\Apify\Dataset\Item\Item;
 use InvalidArgumentException;
+use JsonSerializable;
 
-readonly class DatasetOption implements \JsonSerializable
+readonly class DatasetOption implements JsonSerializable
 {
     /**
      * @param  class-string<Item>|null  $dtoType

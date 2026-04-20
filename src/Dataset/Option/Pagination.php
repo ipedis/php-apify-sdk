@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace DocAxess\Apify\Dataset\Option;
 
-readonly class Pagination implements \JsonSerializable
+use JsonSerializable;
+
+readonly class Pagination implements JsonSerializable
 {
     public function __construct(
         public ?int $limit,

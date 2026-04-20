@@ -5,20 +5,20 @@ declare(strict_types=1);
 use DocAxess\Apify\Webhook\Config\WebhookConfig;
 use DocAxess\Apify\Webhook\Event\EventType;
 
-it('should create config', function () {
+it('should create config', function (): void {
     $config = new WebhookConfig([EventType::RUN_SUCCEEDED, EventType::RUN_CREATED], 'https://example.com');
     expect($config->eventTypes)->toBe([EventType::RUN_SUCCEEDED, EventType::RUN_CREATED])
         ->and($config->url)->toBe('https://example.com')
         ->and($config->template)->toBeNull();
 });
 
-it('should add event type', function () {
+it('should add event type', function (): void {
     $config = new WebhookConfig([EventType::RUN_SUCCEEDED], 'https://example.com');
     $config = $config->addEventType(EventType::RUN_CREATED);
     expect($config->eventTypes)->toBe([EventType::RUN_SUCCEEDED, EventType::RUN_CREATED]);
 });
 
-it('should serialize to json', function (WebhookConfig $config, string $expected) {
+it('should serialize to json', function (WebhookConfig $config, string $expected): void {
     expect(json_encode($config))->toBe($expected);
 })->with([
     [
@@ -31,11 +31,11 @@ it('should serialize to json', function (WebhookConfig $config, string $expected
     ],
 ]);
 
-it('should throw exception for invalid event type', function () {
+it('should throw exception for invalid event type', function (): void {
     new WebhookConfig(['invalid'], 'https://example.com');
 })->throws(AssertionError::class);
 
-it('should add header token', function (WebhookConfig $config, string $expected) {
+it('should add header token', function (WebhookConfig $config, string $expected): void {
     expect(json_encode($config->addBearerToken('token')))->toBe($expected);
 })->with([
     [
@@ -44,7 +44,7 @@ it('should add header token', function (WebhookConfig $config, string $expected)
     ],
 ]);
 
-it('should add header', function (WebhookConfig $config, string $expected) {
+it('should add header', function (WebhookConfig $config, string $expected): void {
     expect(json_encode($config->addHeader('key', 'value')))->toBe($expected);
 })->with([
     [

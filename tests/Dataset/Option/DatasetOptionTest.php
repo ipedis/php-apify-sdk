@@ -5,7 +5,7 @@ use DocAxess\Apify\Dataset\Option\DatasetOption;
 use DocAxess\Apify\Dataset\Option\FormatType;
 use DocAxess\Apify\Dataset\Option\Pagination;
 
-it('should create a dataset option with default values', function () {
+it('should create a dataset option with default values', function (): void {
     $identifier = Identifier::make('my-dataset');
     $option = DatasetOption::fromId($identifier);
 
@@ -14,7 +14,7 @@ it('should create a dataset option with default values', function () {
         ->and($option->pagination->isDisabled())->toBeTrue();
 });
 
-it('should create a dataset option with custom values', function (string $formatType, int $limit, int $offset) {
+it('should create a dataset option with custom values', function (string $formatType, int $limit, int $offset): void {
     $identifier = Identifier::make('my-dataset');
     $formatType = FormatType::fromString($formatType);
     $pagination = Pagination::enabled($limit, $offset);
@@ -31,14 +31,14 @@ it('should create a dataset option with custom values', function (string $format
     0, 100, 200,
 ]);
 
-it('should json serialize', function () {
+it('should json serialize', function (): void {
     $identifier = Identifier::make('my-dataset');
     $option = DatasetOption::fromId($identifier);
 
     expect(json_encode($option))->toBe('{"identifier":"my-dataset","formatType":"json","pagination":{"limit":null,"offset":null}}');
 });
 
-it('should transform to query  params', function (DatasetOption $option, array $params) {
+it('should transform to query  params', function (DatasetOption $option, array $params): void {
     expect($option->toParams())->toBe($params);
 })->with([
     [DatasetOption::fromId(Identifier::make('foo')), ['clean' => true]],
@@ -46,6 +46,6 @@ it('should transform to query  params', function (DatasetOption $option, array $
     [DatasetOption::make(Identifier::make('foo'), FormatType::XLSX, Pagination::disabled()), ['clean' => true, 'format' => 'xlsx']],
 ]);
 
-it('should throw exception when dtoType is wrong', function () {
+it('should throw exception when dtoType is wrong', function (): void {
     DatasetOption::fromId(Identifier::make('foo'), 'wrong');
 })->throws(InvalidArgumentException::class);

@@ -7,7 +7,7 @@ use DocAxess\Apify\Webhook\Data\Moment\When;
 
 $now = CarbonImmutable::now();
 
-it('should create when', function () use ($now) {
+it('should create when', function () use ($now): void {
     $startedAt = $now;
     $finishedAt = $now;
     $when = When::make($startedAt, $finishedAt);
@@ -15,7 +15,7 @@ it('should create when', function () use ($now) {
         ->and($when->finishedAt)->toBe($finishedAt);
 });
 
-it('should create when from array', function (array $payload) use ($now) {
+it('should create when from array', function (array $payload) use ($now): void {
     $when = When::fromArray($payload);
     expect((string) $when->startedAt)->toBe((string) $now)
         ->and((string) $when->finishedAt)->toBe((string) $now);
@@ -24,7 +24,7 @@ it('should create when from array', function (array $payload) use ($now) {
     [['startedAt' => $now->toIso8601String(), 'finishedAt' => $now->toIso8601String()]],
 ]);
 
-it('should create when from array without finishedAt', function (array $payload) use ($now) {
+it('should create when from array without finishedAt', function (array $payload) use ($now): void {
     $startedAt = $now;
     $when = When::fromArray($payload);
     expect((string) $when->startedAt)->toBe((string) $startedAt)
@@ -34,20 +34,20 @@ it('should create when from array without finishedAt', function (array $payload)
     [['startedAt' => $now->toIso8601String()]],
 ]);
 
-it('should check if when is finished', function () use ($now) {
+it('should check if when is finished', function () use ($now): void {
     $startedAt = $now;
     $finishedAt = $now;
     $when = When::make($startedAt, $finishedAt);
     expect($when->isFinished())->toBeTrue();
 });
 
-it('should check if when is running', function () use ($now) {
+it('should check if when is running', function () use ($now): void {
     $startedAt = $now;
     $when = When::make($startedAt, null);
     expect($when->isRunning())->toBeTrue();
 });
 
-it('should calculate execution time in seconds', function () use ($now) {
+it('should calculate execution time in seconds', function () use ($now): void {
     $startedAt = $now;
     $finishedAt = $now->addSeconds(10);
     $when = When::make($startedAt, $finishedAt);

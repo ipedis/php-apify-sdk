@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace DocAxess\Apify\Core\Type;
 
-readonly class Identifier implements \JsonSerializable, \Stringable
+use JsonSerializable;
+use Stringable;
+
+readonly class Identifier implements JsonSerializable, Stringable
 {
     public function __construct(public string $id) {}
 
