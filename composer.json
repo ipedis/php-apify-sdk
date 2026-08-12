@@ -9,7 +9,7 @@
         "citco/carbon": "^3.0"
     },
     "require-dev": {
-        "pestphp/pest": "^4.4",
+        "pestphp/pest": "^5.0",
         "phpstan/phpstan": "^2.1",
         "laravel/pint": "^1.29",
         "rector/rector": "^2.0",
