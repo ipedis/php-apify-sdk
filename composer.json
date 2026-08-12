@@ -1,7 +1,6 @@
 {
     "name": "docaxess/php-apify-sdk",
     "description": "Unofficial SDK for Apify service",
-    "version": "2.0.3",
     "type": "library",
     "require": {
         "saloonphp/saloon": "^4.0",

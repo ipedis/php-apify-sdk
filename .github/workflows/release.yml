@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags: ['*']
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: [8.4, 8.5]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: dom, curl, libxml, mbstring, zip
+          ini-values: error_reporting=E_ALL, zend.assertions=1
+          tools: composer:v2
+          coverage: xdebug
+
+      - name: Lint, test and build
+        run: |
+          composer install
+          composer pint:check
+          composer phpstan
+          composer rector:check
+          composer test:coverage
+
+  publish:
+    needs: testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          tools: composer:v2
+
+      - name: Ensure no hardcoded version in composer.json
+        run: |
+          composer validate --strict
+          if grep -q '"version"' composer.json; then
+            echo "::error::composer.json must not declare a version; Packagist derives it from the git tag."
+            exit 1
+          fi
+
+      - name: Notify Packagist
+        env:
+          PACKAGIST_USERNAME: ${{ secrets.PACKAGIST_USERNAME }}
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+        run: |
+          curl -sSf -XPOST \
+            -H 'content-type:application/json' \
+            "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_TOKEN}" \
+            -d '{"repository":{"url":"https://packagist.org/packages/docaxess/php-apify-sdk"}}'
